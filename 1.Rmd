@@ -1,0 +1,54 @@
+---
+title: "DATATON 1"
+author: "Fabian Sanchez"
+date: "18/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(htmltab)
+link= "https://es.wikipedia.org/wiki/Anexo:Cronolog%C3%ADa_de_epidemias#Epidemias_y_pandemias_en_orden_cronol%C3%B3gico"
+path="/html/body/div[3]/div[3]/div[5]/div[1]/table[4]"
+dataWS2 = htmltab(link, path)
+pande = data.frame(dataWS2$Evento, dataWS2$`DuraciÃ³n`, dataWS2$`PatÃ³geno`)
+head(pande)
+export(data,"pande.sav")
+```
+
+
+
+```{r}
+link= "https://es.wikipedia.org/wiki/Vacunaci%C3%B3n_contra_la_COVID-19_en_Per%C3%BA"
+path="/html/body/div[3]/div[3]/div[5]/div[1]/table[18]"
+dataWS1 = htmltab(link, path)
+head(dataWS1)
+export(data,"departamentos.sav")
+```
+
+```{r}
+library(rio)
+data=import("https://raw.githubusercontent.com/Fabians099/Estadistica_II/main/TB_CENTRO_VACUNACION.csv")
+head(data)
+export(data,"centros.sav")
+```
+
+
+```{r}
+library(rio)
+data1=import("https://raw.githubusercontent.com/Fabians099/Estadistica_II/main/TB_PROGRAMACION_VACUNAS.csv")
+head(data1)
+export(data,"progrmacion.sav")
+```
+
+
+```{r}
+library(sp)
+library(rgdal)
+fromGit=("https://raw.githubusercontent.com/Fabians099/Estadistica_II/main/PROVINCIAS.json")
+wazipMap <- rgdal::readOGR(fromGit,stringsAsFactors = FALSE)
+plot(wazipMap)
+```
